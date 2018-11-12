@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ArticleDAO">
+
+
+
+
+    <select id="queryByPage" resultType="com.baizhi.entity.Article">
+       select
+        *
+       from cmfz_article
+       limit #{start},#{rows}
+    </select>
+
+    <select id="queryTotals" resultType="long">
+       select count(id) from cmfz_article
+
+    </select>
+
+    <select id="queryOne" parameterType="java.lang.String" resultType="com.baizhi.entity.Article">
+         select * from cmfz_article where id=#{id}
+    </select>
+
+    <delete id="delete"  >
+     	delete from  cmfz_article where id=#{id}
+     </delete>
+
+    <insert id="insert" parameterType="com.baizhi.entity.Article">
+      insert into cmfz_article values (#{id},#{title},#{content},#{insertimgPath},#{publishDate},#{guru_name})
+    </insert>
+
+    <update id="update" parameterType="com.baizhi.entity.Article" >
+     	update  cmfz_article set title=#{title},content=#{content},publishDate=#{publishDate},guru_name=#{guru_name} where id=#{id}
+     </update>
+
+
+
+</mapper>

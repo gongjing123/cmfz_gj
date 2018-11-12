@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.TitlePicDAO">
+
+    <insert id="insert" parameterType="com.baizhi.entity.TitlePic">
+      insert into cmfz_TitlePic values (#{id},#{title},#{path},#{status},#{createtime},#{description},#{ordernum})
+    </insert>
+
+
+    <select id="queryByPage" resultType="com.baizhi.entity.TitlePic">
+       select id,title,path,status,createtime,description,ordernum from cmfz_TitlePic limit #{start},#{rows}
+    </select>
+
+    <select id="queryTotals" resultType="long">
+       select count(id) from cmfz_TitlePic
+    </select>
+
+    <delete id="delete"  >
+     	delete from  cmfz_TitlePic where id=#{id}
+     </delete>
+
+    <select id="queryOne" parameterType="java.lang.String" resultType="com.baizhi.entity.TitlePic">
+         select * from cmfz_TitlePic where id=#{id}
+    </select>
+
+    <update id="update" parameterType="com.baizhi.entity.TitlePic" >
+     	update  cmfz_TitlePic set title=#{title},status=#{status},createtime=#{createtime},description=#{description},ordernum=#{ordernum} where id=#{id}
+     </update>
+
+</mapper>

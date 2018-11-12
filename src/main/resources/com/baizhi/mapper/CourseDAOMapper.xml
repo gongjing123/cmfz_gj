@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.CourseDAO">
+
+    <resultMap id="map" type="com.baizhi.entity.Course">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="marking" column="marking"/>
+
+
+        <result property="createTime" column="createTime"/>
+        <collection property="counters" ofType="com.baizhi.entity.Counter">
+            <id property="id" column="cid"/>
+            <result property="title" column="ctitle"/>
+            <result property="user_id" column="user_id"/>
+            <result property="course_id" column="duration"/>
+            <result property="createTime" column="ccreateTime"/>
+
+        </collection>
+    </resultMap>
+
+    <select id="queryAll" resultMap="map">
+       select
+        p.*,
+        c.id cid,
+        c.title ctitle,
+        c.user_id user_id,
+        c.course_id course_id,
+        c.createTime  ccreateTime
+       from cmfz_course p left join cmfz_counter c on p.id=c.course_id
+       where p.marking='1'
+        limit #{start},#{rows}
+    </select>
+
+
+    <select id="queryAll1" resultMap="map">
+       select
+        p.*,
+        c.id cid,
+        c.title ctitle,
+        c.user_id user_id,
+        c.course_id course_id,
+        c.createTime  ccreateTime
+
+       from cmfz_course p left join cmfz_counter c on p.id=c.course_id
+       where p.marking='2'
+        limit #{start},#{rows}
+    </select>
+
+
+    <select id="queryTotals" resultType="long">
+       select count(id) from cmfz_course
+    </select>
+
+    <delete id="delete"  >
+     	delete from  cmfz_course where id=#{id}
+     </delete>
+
+    <insert id="insert" parameterType="com.baizhi.entity.Course">
+      insert into cmfz_course values (#{id},#{title},#{marking},#{createTime})
+    </insert>
+
+    <select id="queryOne" parameterType="java.lang.String" resultType="com.baizhi.entity.Course">
+         select * from cmfz_course where id=#{id}
+    </select>
+
+    <update id="update" parameterType="com.baizhi.entity.Course" >
+     	update  cmfz_course set title=#{title},marking=#{marking},createTime=#{createTime} where id=#{id}
+     </update>
+
+
+</mapper>

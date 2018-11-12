@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.GuruDAO">
+
+    <insert id="insert" parameterType="com.baizhi.entity.Guru">
+      insert into cmfz_Guru values (#{id},#{name },#{headPic},#{gender})
+    </insert>
+
+
+    <select id="queryByPage" resultType="com.baizhi.entity.Guru">
+       select * from cmfz_Guru limit #{start},#{rows}
+    </select>
+
+    <select id="queryTotals" resultType="long">
+       select count(id) from cmfz_Guru
+    </select>
+
+    <delete id="delete"  >
+     	delete from  cmfz_Guru where id=#{id}
+     </delete>
+
+    <select id="queryOne" parameterType="java.lang.String" resultType="com.baizhi.entity.Guru">
+         select * from cmfz_Guru where id=#{id}
+    </select>
+
+    <update id="update" parameterType="com.baizhi.entity.Guru" >
+     	update  cmfz_Guru set name=#{name},gender=#{gender} where id=#{id}
+     </update>
+
+</mapper>

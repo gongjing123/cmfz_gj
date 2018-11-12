@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDAO">
+
+
+    <resultMap id="map" type="com.baizhi.entity.Album">
+        <id property="id" column="aid"/>
+        <result property="title" column="atitle"/>
+        <result property="coverImg" column="coverImg"/>
+        <result property="count" column="count"/>
+        <result property="score" column="score"/>
+        <result property="author" column="author"/>
+        <result property="broadCast" column="broadCast"/>
+        <result property="brief" column="brief"/>
+        <result property="publishDate" column="publishDate"/>
+        <collection property="children" ofType="com.baizhi.entity.Chapter">
+            <id property="id" column="id"/>
+            <result property="title" column="title"/>
+            <result property="size" column="size"/>
+            <result property="duration" column="duration"/>
+            <result property="downloadPath" column="downloadPath"/>
+            <result property="uploadDate" column="uploadDate"/>
+
+        </collection>
+    </resultMap>
+
+    <select id="queryByPage" resultMap="map">
+       select
+        a.id aid,
+        a.title atitle,
+        a.coverImg,
+        a.count,
+        a.score,
+        a.author,
+        a.broadCast,
+        a.brief,
+        a.publishDate,
+        c.*
+       from cmfz_album a left join cmfz_chapter c on a.id=c.album_id
+       limit #{start},#{rows}
+    </select>
+
+    <select id="queryTotals" resultType="long">
+       select count(m.id) from cmfz_chapter a inner join cmfz_album m
+       on a.album_id = m.id
+    </select>
+
+    <delete id="delete"  >
+     	delete from  cmfz_album where id=#{id}
+     </delete>
+
+    <insert id="insert" parameterType="com.baizhi.entity.Album">
+      insert into cmfz_album values (#{id},#{title},#{coverImg},#{count},#{score},#{author},#{broadCast},#{brief},#{publishDate})
+    </insert>
+
+
+</mapper>
